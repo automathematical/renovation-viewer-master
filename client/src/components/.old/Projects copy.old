@@ -1,0 +1,77 @@
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import {
+  getProjects,
+  getProject,
+  deleteProject,
+} from "../../actions/projectActions";
+
+import "./Projects.css";
+
+class Projects extends Component {
+  static propTypes = {
+    getProjects: PropTypes.func.isRequired,
+    getProject: PropTypes.func.isRequired,
+    project: PropTypes.object,
+    isAuthenticated: PropTypes.bool,
+  };
+
+  componentDidMount() {
+    this.props.getProjects();
+  }
+
+  onDeleteClick = (id) => {
+    this.props.deleteProject(id);
+  };
+
+  onClickPass = (pass) => {
+    console.log("passed");
+    console.log(pass);
+    this.props.getProject(pass);
+  };
+
+  render() {
+    const { projects } = this.props.project;
+    return (
+      <div className="projects">
+        {projects.map(({ _id, title, location, projectDesc }) => (
+          <div key={_id} className="project">
+            <h3 className="project__title">{title}</h3>
+            <p className="project__location">{location}</p>
+            <p className="project__desc">{projectDesc}</p>
+            {this.props.isAuthenticated ? (
+              <button
+                className="remove__btn"
+                onClick={this.onDeleteClick.bind(this, _id)}
+              >
+                X
+              </button>
+            ) : null}
+            <Link to={`/ProjectPage/${_id}`}>
+              <button
+                className="btn__toProject"
+                onClick={this.onClickPass.bind(this, _id)}
+              >
+                <b> Go to {title}</b>
+              </button>
+            </Link>
+          </div>
+        ))}
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = (state) => ({
+  project: state.project,
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, {
+  getProject,
+  getProjects,
+  deleteProject,
+})(Projects);

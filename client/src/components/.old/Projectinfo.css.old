@@ -1,0 +1,17 @@
+.projectinfo{
+    box-shadow: 2px 2px 4px #000;
+    overflow: hidden;
+    position: relative;
+    width: 30%;
+}
+
+.btn__toDamages{
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    background-color: rgb(69, 145, 155);
+    padding: 0.5rem 1rem;
+    margin-right: 2rem;
+    margin-left: 2rem;
+}

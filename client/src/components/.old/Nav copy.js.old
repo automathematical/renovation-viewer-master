@@ -1,0 +1,33 @@
+/*
+import React, { Component } from "react";
+import "./Nav.css";
+
+class Nav extends Component {
+  render() {
+    return (
+      <nav className="nav">
+        <h1 className="logo">Renovation Viewer</h1>
+        <ul className="nav__list">
+          <li className="nav__item">
+            <a className="nav__link" href="/">
+              Home
+            </a>
+          </li>
+          <li className="nav__item">
+            <a className="nav__link" href="/Aboutpage">
+              About
+            </a>
+          </li>
+          <li className="nav__item">
+            <a className="nav__link" href="/Contactpage">
+              Contact
+            </a>
+          </li>
+        </ul>
+      </nav>
+    );
+  }
+}
+
+export default Nav;
+*/

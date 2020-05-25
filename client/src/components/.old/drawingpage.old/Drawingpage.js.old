@@ -1,0 +1,24 @@
+import React, { Component } from 'react'
+import Nav from '../../Nav/Nav.js'
+import { connect } from "react-redux"
+
+class DrawingPage extends Component {
+    render() {
+        console.log("my message", this.props.message)
+        return (
+            <div>
+                <Nav />
+
+                
+
+
+            </div>
+        )
+    }
+}
+
+const mapReduxStateToProps = reduxState => ({
+    message: reduxState.user.message
+})
+
+export default connect(mapReduxStateToProps, null)(DrawingPage)

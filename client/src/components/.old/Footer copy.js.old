@@ -1,0 +1,30 @@
+import React, { Component } from "react";
+import "./Footer.css";
+
+class Footer extends Component {
+  render() {
+    return (
+      <div className="footer">
+        <ul className="footer__list">
+          <li className="footer__item">
+            <a className="footer__link" href="/">
+              Home
+            </a>
+          </li>
+          <li className="footer__item">
+            <a className="footer__link" href="/Aboutpage">
+              About
+            </a>
+          </li>
+          <li className="footer__item">
+            <a className="footer__link" href="/Contactpage">
+              Contact
+            </a>
+          </li>
+        </ul>
+      </div>
+    );
+  }
+}
+
+export default Footer;

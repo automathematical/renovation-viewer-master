@@ -1,0 +1,61 @@
+import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import Popup from "reactjs-popup";
+import Projectform from "../Projectform/Projectform";
+import RegisterForm from "../auth/RegisterForm";
+import Login from "../auth/LoginForm";
+import Logout from "../auth/Logout";
+
+import "./Header.css";
+
+class Header extends Component {
+  static propTypes = {
+    auth: PropTypes.object.isRequired
+  };
+
+  render() {
+    const { isAuthenticated, user } = this.props.auth;
+    const authLinks = (
+      <Fragment>
+        <Popup
+          trigger={<button className="header__button">+ Add Project</button>}
+        >
+          <Projectform />
+        </Popup>
+        {user ? `Welcome ${user.name}` : ""}
+        <Logout />
+      </Fragment>
+    );
+
+    const guestLinks = (
+      <Fragment>
+        <Popup trigger={<button className="header__button">Register</button>}>
+          <RegisterForm />
+        </Popup>
+        <Popup trigger={<button className="header__button">Login</button>}>
+          <Login />
+        </Popup>
+      </Fragment>
+    );
+
+    return (
+      <div className="header__box">
+        <h1 className="header__title">Projects</h1>
+        <input
+          type="text"
+          name=""
+          className="header__input"
+          placeholder="search your project"
+          id="search"
+        ></input>
+        <button className="header__button">Search Project</button>
+        {isAuthenticated ? authLinks : guestLinks}
+      </div>
+    );
+  }
+}
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+export default connect(mapStateToProps, null)(Header);

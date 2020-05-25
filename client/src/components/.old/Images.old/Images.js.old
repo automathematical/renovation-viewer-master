@@ -1,0 +1,69 @@
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import {
+  getImages,
+  getImage,
+  deleteImage,
+} from "../../redux/actions/imagesActions";
+
+import "./Images.css";
+
+class Images extends Component {
+  static propTypes = {
+    getImages: PropTypes.func.isRequired,
+    getImage: PropTypes.func.isRequired,
+    image: PropTypes.object,
+    isAuthenticated: PropTypes.bool,
+  };
+
+  componentDidMount() {
+    this.props.getImages();
+  }
+
+  onDeleteClick = (id) => {
+    this.props.deleteImage(id);
+  };
+
+  onClickPass = (pass) => {
+    console.log("passed");
+    console.log(pass);
+    this.props.getImage(pass);
+  };
+
+  render() {
+    const { images } = this.props.image;
+    return (
+      <div className="images">
+        {images.map(({ _id, img_title, image }) => (
+          <div className="images">
+            <h1 className="img_title">{img_title}</h1>
+            <img alt="" className="image">
+              {image}
+            </img>
+
+            {this.props.isAuthenticated ? (
+              <button
+                className="remove__btn"
+                onClick={this.onDeleteClick.bind(this, _id)}
+              >
+                X
+              </button>
+            ) : null}
+          </div>
+        ))}
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = (state) => ({
+  image: state.image,
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, {
+  getImage,
+  getImages,
+  deleteImage,
+})(Images);

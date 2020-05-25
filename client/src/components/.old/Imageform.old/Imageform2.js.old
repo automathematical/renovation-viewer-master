@@ -1,0 +1,109 @@
+import React from "react";
+import { connect } from "react-redux";
+import { addImage } from "../../redux/actions/imagesActions";
+
+import "./Imageform.css";
+
+//import Axios from "axios";
+
+class Imageform2 extends React.Component {
+  // Post = e => {
+  //   e.preventDefault();
+  //   const file = document.getElementById("inputGroupFile01").files;
+  //   const formData = new FormData();
+  //   // const projectId = response.data._id
+  //   formData.append("file", file[0]);
+
+  //   fetch(("http://localhost:5000/api/projects/upload"), {
+  //     method: "POST",
+  //     mode: "cors",
+  //     body: formData
+  //   }).then(r => {
+  //     console.log('r', r);
+  //     return r.json()
+  //   })
+  //     .then((data) => console.log('data', data))
+  //     .catch(e => console.log({ e }))
+
+  //   document
+  //     .getElementById("file")
+  //     .setAttribute("src", `http://localhost:5000/${file[0].name}/upload`);
+  //   console.log(file[0]);
+  // };
+
+  // state = {
+  //   modal: false,
+  //   img_title: "",
+  //   data: {}
+  // };
+
+  toggle = () => {
+    this.setState({
+      modal: !this.state.modal,
+    });
+  };
+
+  onChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  onSubmit = (e) => {
+    e.preventDefault();
+
+    const newImage = {
+      project: this.state.project,
+      data: this.state.data,
+    };
+
+    //add image via addImage action
+    this.props.addImage(newImage);
+
+    // Close modal
+    this.toggle();
+  };
+
+  render() {
+    //const newImage = this.state;
+    return (
+      <div className="Imageform">
+        <h1>Add images</h1>
+
+        <form onSubmit={this.onSubmit}>
+          <div className="custom-file">
+            <input
+              type="file"
+              className="custom-file-input"
+              id="inputGroupFile01"
+              aria-describedby="inputGroupFileAddon01"
+            />
+            <label
+              className="custom-file-label"
+              htmlFor="inputGroupFile01"
+            ></label>
+          </div>
+
+          <button
+            type="submit"
+            className="btn btn-primary"
+            onClick={this.addImage}
+          >
+            Upload
+          </button>
+          <img
+            alt=""
+            id="img"
+            style={{
+              display: "block",
+            }}
+          ></img>
+        </form>
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = (state) => ({
+  image: state.image,
+});
+
+export default connect(mapStateToProps, { addImage })(Imageform2);

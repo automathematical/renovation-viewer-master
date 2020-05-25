@@ -1,0 +1,173 @@
+import React, { Component } from "react";
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  NavLink,
+} from "reactstrap";
+import { connect } from "react-redux";
+import { addProject } from "../../redux/actions/projectActions";
+
+const axios = require("axios");
+
+class Projectform extends Component {
+  state = {
+    modal: false,
+    title: "",
+    location: "",
+    projectDesc: "",
+  };
+
+  toggle = () => {
+    this.setState({
+      modal: !this.state.modal,
+    });
+  };
+
+  // onChange = (e) => {
+  //   this.setState({ [e.target.name]: e.target.value });
+  // };
+
+  onChange = (e) => {
+    // write the input to the state on change
+    if (e.target.name !== "file") {
+      const key = e.target.name;
+      this.setState({ [key]: e.target.value });
+    } else {
+      this.setState({ file: e.target.files[0] });
+    }
+
+    // alternatively, you can write a function that retrieves all the data from the html document during an 'onSubmit' event. Then all the code goes in the 'submitForm' function.
+  };
+
+  onSubmit = (e) => {
+    e.preventDefault();
+
+    const newProject = {
+      title: this.state.title,
+      location: this.state.location,
+      projectDesc: this.state.projectDesc,
+    };
+
+    // if this does not work, you'll need to install a CORS enabler in your browser (as a chrome or firefox extension). Then you should enable cross-origin-resource-sharing.
+    axios
+      .post("http://localhost:3000/api/projects", newProject)
+      .then((response) => {
+        console.log("created", response.data);
+        // this means the project was succesfully created.
+
+        // Say we also have an image that we want to link to this project.
+        // Due to the structure of our API at localhost 5000, we cannot link an image immediately to the project.
+        // However, we can link it now with a POST request using formDATA.
+        if (this.state.file) {
+          //get the project id of the project you just created
+          const projectId = response.data._id;
+
+          // create the formData body
+          const formData = new FormData();
+          formData.append("file", this.state.file);
+
+          // perform the actual request
+          axios
+            .post(
+              `http://localhost:3000/api/projects/${projectId}/upload`,
+              formData
+            )
+            .then((res) => console.log("res", res))
+            .catch((error) => console.log("error uploading Formdata", error));
+        }
+      })
+      .catch((error) => console.log("error", error));
+
+    // const formData = new FormData();
+    // formData.append("image", this.fileInput.files[0]);
+    // console.log(formData);
+
+    //add project via addProject action
+    this.props.addProject(newProject);
+
+    // Close modal
+    this.toggle();
+  };
+
+  render() {
+    const { title, location, projectDesc } = this.state;
+    return (
+      <div>
+        <NavLink onClick={this.toggle} href="#">
+          Add Project
+        </NavLink>
+
+        <Modal isOpen={this.state.modal} toggle={this.toggle}>
+          <ModalHeader toggle={this.toggle}>Add Project</ModalHeader>
+          <ModalBody>
+            <Form onSubmit={this.onSubmit}>
+              <FormGroup>
+                <Label for="title">{title}</Label>
+                <Input
+                  type="text"
+                  name="title"
+                  id="title"
+                  placeholder="title"
+                  className="mb-3"
+                  onChange={this.onChange}
+                />
+
+                <Label for="location">{location}</Label>
+                <Input
+                  type="text"
+                  name="location"
+                  id="location"
+                  placeholder="location"
+                  className="mb-3"
+                  onChange={this.onChange}
+                />
+
+                <Label for="Project Description">{projectDesc}</Label>
+                <Input
+                  type="text"
+                  name="Project Description"
+                  id="Project Description"
+                  placeholder="Project Description"
+                  className="mb-3"
+                  onChange={this.onChange}
+                />
+
+                <Label for="image">Choose a project image</Label>
+                <Input
+                  type="file"
+                  name="file"
+                  id="file"
+                  placeholder="file"
+                  className="mb-3"
+                  onChange={this.onChange}
+                />
+
+                <Button
+                  color="dark"
+                  style={{ marginTop: "2rem" }}
+                  block
+                  onClick={this.onSubmit}
+                >
+                  Submit
+                </Button>
+              </FormGroup>
+            </Form>
+          </ModalBody>
+        </Modal>
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = (state) => ({
+  project: state.project,
+});
+
+// export default connect(mapStateToProps, { addProject })(Projectform);
+export default connect(mapStateToProps, { addProject })(Projectform);

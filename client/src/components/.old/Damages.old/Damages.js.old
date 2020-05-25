@@ -1,0 +1,50 @@
+// import React, { Component } from "react";
+// import Popup from "reactjs-popup";
+// import { Tabs } from 'react-bootstrap'
+// import { Tab } from 'react-bootstrap'
+// import { TabContainer } from 'react-bootstrap'
+// import { TabContent } from 'react-bootstrap'
+// import { TabPane } from 'react-bootstrap'
+// // import 'bootstrap/dist/css/bootstrap.min.css';
+
+
+// export default class Damage extends Component {
+//     render() {
+//         return (
+//             <div>
+//                 <body>
+
+
+//                     <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
+//                         <Tab eventKey="home" title="Picture 1">
+//                             <p></p>
+//                             <div className="project__image--container">
+//                                 <img className="project__img" src="/images/DSC_0307.jpg" ></img>
+//                             </div>
+//                         </Tab>
+
+//                         <Tab eventKey="profile" title="Picture 2">
+//                             <p></p>
+//                             <img className="project__img" src="/images/DSC_0311.jpg"></img>
+//                         </Tab>
+
+//                         <Tab eventKey="Damage Type" title="Damage Type">
+//                             <div>Renovation needed?</div>
+//                             <div>What brick type?</div>
+//                         </Tab>
+
+//                         <Tab eventKey="contact" title="Info">
+//                             <div>Cracks, Waterdamage, Rust</div>
+
+//                         </Tab>
+//                     </Tabs>
+
+
+//                 </body>
+//             </div>
+
+//         )
+//     }
+// }
+
+

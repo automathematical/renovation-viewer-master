@@ -1,0 +1,72 @@
+import React, { Component } from "react";
+import { Form, FormGroup, Label, Button, Input } from "reactstrap";
+const axios = require("axios");
+
+export default class GetProjectComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      image64: "",
+      projectid: "",
+    };
+  }
+
+  showImage = (e) => {
+    e.preventDefault();
+    //this will first recieve an encoded image from the server
+    console.log("submitting");
+    axios
+      .get(`http://localhost:3000/api/projects/${this.state.projectid}/`)
+      .then((response) => {
+        console.log(response);
+        //here we transform it to a readable image using buffertobase64()
+        let base64 = this.bufferToBase64(response);
+        let imageurl = "data:image/jpeg;base64," + base64;
+        this.setState({ image64: imageurl });
+      })
+      .catch((error) => console.log("error", error));
+  };
+
+  onChange = (e) => {
+    // write the input to the state on change
+    this.setState({ projectid: e.target.value });
+  };
+
+  //method to change a buffer array into a readable image
+  bufferToBase64 = (input) => {
+    let array = new Uint8Array(input.data.images.data);
+    var binary = "";
+    var len = array.byteLength;
+    for (var i = 0; i < len; i++) {
+      binary += String.fromCharCode(array[i]);
+    }
+    return btoa(binary);
+  };
+
+  render() {
+    return (
+      <div>
+        <h1>GET Project form</h1>
+        <p>This form gets a 'Project' from the mongodb middleware.</p>
+        <hr />
+        <Form onSubmit={this.showImage}>
+          <FormGroup>
+            <Label>ProjectID</Label>
+            <Input
+              type="text"
+              name="projectid"
+              placeholder="ProjectID of the project"
+              onChange={this.onChange}
+            />
+          </FormGroup>
+          <hr />
+          <Button color="dark" type="submit">
+            Show Image
+          </Button>
+        </Form>
+        <br />
+        <img src={this.state.image64} alt="" width="300px" height="300px"></img>
+      </div>
+    );
+  }
+}

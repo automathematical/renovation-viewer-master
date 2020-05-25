@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Renovation Viewer</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    font-family: "Poppins", sans-serif
+  }
+
+  body {
+    font-size: 16px;
+  }
+
+  .w3-half img {
+    margin-bottom: -6px;
+    margin-top: 16px;
+    opacity: 0.8;
+    cursor: pointer;
+    height: 30rem;
+  }
+
+  .w3-half img:hover {
+    opacity: 1
+  }
+</style>
+
+<body>
+
+  <!-- Sidebar/menu -->
+  <nav class="w3-sidebar w3-red w3-collapse w3-top w3-large w3-padding" style="z-index:3;width:300px;font-weight:bold;"
+    id="mySidebar"><br>
+    <a href="javascript:void(0)" onclick="w3_close()" class="w3-button w3-hide-large w3-display-topleft"
+      style="width:100%;font-size:22px">Close Menu</a>
+    <div class="w3-container">
+      <h3 class="w3-padding-64"><b>Renovation Viewer<br>automate repetitive tasks</b></h3>
+    </div>
+    <div class="w3-bar-block">
+      <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Home</a>
+      <a href="#showcase" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Quick Overview</a>
+      <a href="#project" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">The Project</a>
+      <a href="#documentation" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Documentation</a>
+      <a href="#improvements" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Future improvements</a>
+      <a href="#team" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Team</a>
+      <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Contact</a>
+      <a href="https://github.ugent.be/mvleempu/renovation-viewer" class="w3-bar-item w3-button w3-hide-small"><i
+          class="fa fa-github"></i> GITHUB</a>
+    </div>
+  </nav>
+
+  <!-- Top menu on small screens -->
+  <header class="w3-container w3-top w3-hide-large w3-red w3-xlarge w3-padding">
+    <a href="javascript:void(0)" class="w3-button w3-red w3-margin-right" onclick="w3_open()">☰</a>
+    <span>Renovation Viewer</span>
+  </header>
+
+  <!-- Overlay effect when opening sidebar on small screens -->
+  <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu"
+    id="myOverlay"></div>
+
+  <!-- !PAGE CONTENT! -->
+  <div class="w3-main" style="margin-left:340px;margin-right:40px">
+
+    <!-- Header -->
+    <div class="w3-container" style="margin-top:80px" id="showcase">
+      <h1 class="w3-jumbo"><b>The Application</b></h1>
+      <h1 class="w3-xxxlarge w3-text-red"><b>Quick Overview.</b></h1>
+      <hr style="width:50px;border:5px solid red" class="w3-round">
+    </div>
+
+    <!-- Photo grid (modal) -->
+    <div class="w3-row-padding">
+      <div class="w3-half">
+        <img src="images/screens/2. projectpage.PNG" style="width:100%" onclick="onClick(this)"
+          alt="The first page gives an overview of your projects">
+        <img src="images/screens/3. login.PNG" style="width:100%" onclick="onClick(this)"
+          alt="Login to the application via JWT encription">
+        <img src="images/screens/1. add project.PNG" style="width:100%" onclick="onClick(this)"
+          alt="Add a project and upload it to the cloud">
+        <img src="images/screens/7. projectpage add pics.PNG" style="width:100%" onclick="onClick(this)"
+          alt="Add more pictures to the project">
+      </div>
+
+      <div class="w3-half">
+        <img src="images/screens/3. Register.PNG" style="width:100%" onclick="onClick(this)"
+          alt="Register yourself GDPR conform">
+        <img src="images/screens/3. welcome.PNG" style="width:100%" onclick="onClick(this)"
+          alt="After login you have acces to new functionallity">
+        <img src="images/screens/7. projectpage.PNG" style="width:100%" onclick="onClick(this)"
+          alt="Go to a project to see more information">
+        <img src="images/screens/8. report damage.PNG" style="width:100%" onclick="onClick(this)"
+          alt="After selecting a picture click and drag to place an annotation">
+      </div>
+
+    </div>
+
+    <!-- Modal for full size images on click-->
+    <div id="modal01" class="w3-modal w3-black" style="padding-top:0" onclick="this.style.display='none'">
+      <span class="w3-button w3-black w3-xxlarge w3-display-topright">×</span>
+      <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
+        <img id="img01" class="w3-image">
+        <p id="caption"></p>
+      </div>
+    </div>
+
+    <!-- the project -->
+    <div class="w3-container" id="project" style="margin-top:75px">
+      <h1 class="w3-xxxlarge w3-text-red"><b>The Project.</b></h1>
+      <hr style="width:50px;border:5px solid red" class="w3-round">
+      <h3 className="about_title">To kick of the project we challenged us with the following idea:</h3>
+
+      <h1 className="about_title">Store your projects in the cloud</h1>
+      <p className="about_text">
+        Away with boring repetitive tasks like editing a word document with
+        pictures. The renovation viewer web-application makes it easy to
+        document the existing condition and potential damage cases of
+        buildings. Make and store your renovation analysis report in a
+        matter of seconds.
+        <br /> <br /> Adding: <br /> <br /> - General description of the
+        building and site <br /> - Upload pictures related to the building
+        <br /> - Accessibility evaluation <br /> - Material inventory <br />
+        - Structural evaluation <br /> - And much more <br /> <br /> After
+        uploading the project with related pictures, you can map the damages
+        to the pictures with the help of our damage-mapper. The
+        damage-mapper creates a user-friendly interface which helps the user
+        to display the damages in a “paint”-like application. It lets the
+        user select a certain point or selection on the image and afterwards
+        you can categorise the damage in a default or custom category. Edit
+        and add additional pictures related to the damages to add more
+        detail if needed. Document everything in the cloud to get a better
+        overview of the project. Damages will be indicated by an interactive
+        rectangle which are visible on the images. Options are provided like
+        filtering out a specific category of damages to be handled. Typical
+        problems such as crack openings could be monitored and documented
+        for further analysis. <br /> <br /> When everything is documented,
+        you can generate your report in your preferred text format as easy
+        as a click of a mouse button.
+      </p>
+      <div>
+        <a href="https://github.ugent.be/mvleempu/renovation-viewer" class="w3-bar-item w3-button w3-hide-small">
+          <h3><i class="fa fa-github"></i> DOWNLOAD THE PROJECT ON GITHUB</h3>
+        </a>
+      </div>
+    </div>
+
+
+    <!-- documentation -->
+    <div class="w3-container" id="documentation" style="margin-top:75px">
+      <h1 class="w3-xxxlarge w3-text-red"><b>Documentation.</b></h1>
+      <hr style="width:50px;border:5px solid red" class="w3-round">
+      <h1 className="about_title">How the app works</h1>
+
+      <!-- general workflow -->
+      <h3 className="about_title">General workflow</h3>
+      <p><em>Click on the images for additional information</em></p>
+      <div class="w3-half">
+        <img src="images/1. MERN stack schema.jpg" style="width:100%" onclick="onClick(this)" alt="The general 
+          workflow of our application is the MERN Stack. 
+            It is a framework in which we make a connection from the client to the database. 
+            For the client we use React as a user interface and this is what the user of the 
+            app will see. To make a connection from the client to the server, we need middleware 
+            (express and redux). We used redux to have a good overview of where the state of our 
+            objects is saved. We used mongoose and Node.js to create a back-end or server.The 
+            server-side requests are processed and send to MongoDB, our online database.">
+        <img src="images/7. DataTree2.jpg" style="width:100%" onclick="onClick(this)"
+          alt="Following this DataTree, our objects are created in mongoose and saved in MongoDB.">
+        <img src="images/2. Redux schema.jpg" style="width:100%" onclick="onClick(this)" alt="Different 
+          requests can be used in the app. Those requests are the 
+            CRUD-operations: create, read, update and delete. In our app this are 
+            the actions we can execute with for example project objects. If in the app such an 
+            action is called, it is sent to the middleware, which exchanges 
+            information with the server and MongoDB. Then the reducers make a new 
+            state that is send back to update the reducers and the new state is rendered in React.">
+      </div>
+
+    
+      <div class="w3-half">
+        <img src="images/screens/1. add project.PNG" style="width:100%" onclick="onClick(this)"
+          alt="An example of the MERN-workflow: Information of a new project is added on the form and saved in MongoDB.">
+        <img src="images/7. DataTree.jpg" style="width:100%" onclick="onClick(this)"
+          alt="This is another expample of a DataTree to store our projects in MongoDB.">
+        <img src="images/screens/4. welcome.PNG" style="width:100%" onclick="onClick(this)"
+          alt="Example of the Redux workflow: projects are read and rendered on the main page, they can also be deleted…">
+      </div>
+
+      <!-- construction of the app -->
+      <h3 className="about_title">Construction of the app</h3>
+      
+      <div class="w3-row-padding">
+        <img src="images/3. Navigation Bar long.jpg" style="width:100%" onclick="onClick(this)" alt="The 
+          navigation bar appears on top on every page and it is the core of our app.">
+      </div>
+
+      <div class="w3-row-padding">
+        <div class="w3-half">
+          <img src="images/4. StartpagenotLoggedIN.jpg" style="width:100%" onclick="onClick(this)" alt="On 
+            the startpage is a list of all the projects. Every project contains like shown in the DataTree an 
+            ID, title, location, description and a main image. Here only the title, location and main image 
+            are mapped. There also is a button to go to the related project page and a delete button for 
+            every project, which appears only if you’re logged in.">
+          <img src="images/5. Projectpage.jpg" style="width:100%" onclick="onClick(this)" alt="On 
+            the projectpage are all the elements of the project shown and there is a button 
+            to add more project pictures. For these pictures, the ID of the project is given, 
+            so the pictures are connected to the project and are shown on the projectpage. For 
+            every picture there is the possibility to go to the related damagepage.">
+          <img src="images/6. Damagepage.jpg" style="width:100%" onclick="onClick(this)" alt="On 
+            the damagepage, an annotation-tool appears. It is possible to identify and appoint damages.">
+        </div>
+
+        <div class="w3-half">
+          <img src="images/screens/4. welcome.PNG" style="width:100%" onclick="onClick(this)"
+            alt="An example of how the startpage looks like in our app.">
+          <img src="images/screens/7. projectpage.PNG" style="width:100%" onclick="onClick(this)"
+            alt="An example of how the projectpage looks like in our app.">
+          <img src="images/screens/8. report damage.PNG" style="width:100%" onclick="onClick(this)"
+            alt="An example of how the damagepage looks like in our app.">
+        </div>
+      </div>
+
+      <!-- improvements -->
+      <div class="w3-container" id="improvements" style="margin-top:75px">
+        <h1 class="w3-xxxlarge w3-text-red"><b>Future improvements.</b></h1>
+        <hr style="width:50px;border:5px solid red" class="w3-round">
+        <h1 className="about_title">Things we would like to add or change in the future</h1>
+        <h3 className="about_title">Wishes</h3>
+        <p>- ability to reload the annotations with complementary image</p>
+        <p>- ability to add multiple project pictures at the same time</p>
+        <p>- ability to convert all the information about the project to a PDF-format</p>
+        <p>- ability to add classifications to the damage-annotations</p>
+        <p>- ability to create an overview by filtering on damage-annotations</p>
+        <h3 className="about_title">Mongo DB Relationships</h3>
+        <p>- Embedded or reference</p>
+        <p>- Cloud photo storage</p>
+      </div>
+
+      <!-- team -->
+      <div class="w3-container" id="team" style="margin-top:75px">
+        <h1 class="w3-xxxlarge w3-text-red"><b>Team.</b></h1>
+        <hr style="width:50px;border:5px solid red" class="w3-round">
+        <p>We are two master students who collaborated in making this project.
+        </p>
+        <p><b>Students:</b>:</p>
+      </div>
+
+      <!-- The students -->
+      <div class="w3-row-padding w3-grayscale">
+        <div class="w3-col m4 w3-margin-bottom">
+          <div class="w3-light-grey">
+            <img src="images/profilePic/Math.jpg" alt="John" style="width:100%">
+            <div class="w3-container">
+              <h3>Mathieu van Leemputten</h3>
+              <!-- <p class="w3-opacity">Master Student Ugent</p> -->
+              <!-- <p>Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.</p> -->
+            </div>
+          </div>
+        </div>
+        <div class="w3-col m4 w3-margin-bottom">
+          <div class="w3-light-grey">
+            <img src="images/profilePic/evelien.jpg" alt="Jane" style="width:100%">
+            <div class="w3-container">
+              <h3>Evelien Couvreur</h3>
+              <!-- <p class="w3-opacity">Master Student Ugent</p> -->
+              <!-- <p>Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.</p> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact -->
+      <class class="w3-container" id="contact" style="margin-top:75px">
+        <h1 class="w3-xxxlarge w3-text-red"><b>Contact.</b></h1>
+        <hr style="width:50px;border:5px solid red" class="w3-round">
+      </class>
+
+      <div class="w3-row w3-padding-32 w3-section">
+        <div class="w3-col m4 w3-container">
+          <img src="images/logoUgent.png" class="w3-image w3-round" style="width:65%">
+        </div>
+        <div class="w3-col m8 w3-panel">
+          <div class="w3-large w3-margin-bottom">
+            <i class="fa fa-map-marker fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> GHENT
+            UNIVERSITY, BELGIUM<br>
+            <!-- <i class="fa fa-phone fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Phone: +00
+                151515<br> -->
+            <i class="fa fa-envelope fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Email:
+            mathieu.vanleemputten@ugent.be<br>
+            <i class="fa fa-envelope fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Email:
+            Evelien.Couvreur@ugent.be<br>
+          </div>
+        </div>
+
+        <!-- End page content -->
+      </div>
+
+      <!-- W3.CSS Container -->
+      <div class="w3-light-grey w3-container w3-padding-32" style="margin-top:75px;padding-right:58px">
+        <p class="w3-right">This project is maintained by <a href="https://github.com/automathematically/"
+            target="_blank" class="w3-hover-opacity"> AUTOMATHEMATICALLY</a></p>
+      </div>
+
+      <script>
+        // Script to open and close sidebar
+        function w3_open() {
+          document.getElementById("mySidebar").style.display = "block";
+          document.getElementById("myOverlay").style.display = "block";
+        }
+
+        function w3_close() {
+          document.getElementById("mySidebar").style.display = "none";
+          document.getElementById("myOverlay").style.display = "none";
+        }
+
+        // Modal Image Gallery
+        function onClick(element) {
+          document.getElementById("img01").src = element.src;
+          document.getElementById("modal01").style.display = "block";
+          var captionText = document.getElementById("caption");
+          captionText.innerHTML = element.alt;
+        }
+      </script>
+
+</body>
+
+</html>

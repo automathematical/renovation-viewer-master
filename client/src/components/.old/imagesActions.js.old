@@ -1,0 +1,76 @@
+import axios from "axios";
+import {
+  GET_IMAGES,
+  GET_IMAGE,
+  ADD_IMAGE,
+  DELETE_IMAGE,
+  IMAGES_LOADING
+} from "../../redux/actions/types";
+import { tokenConfig } from "../../redux/actions/authActions";
+import { returnErrors } from "../../redux/actions/errorAction";
+
+export const getImages = () => dispatch => {
+  dispatch(setImagesLoading());
+  axios
+    .get("api/images")
+    .then(res =>
+      dispatch({
+        type: GET_IMAGES,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
+
+
+export const getImage = (id) => (dispatch, getState) => {
+  dispatch(setImagesLoading());
+  axios
+    .get(`/api/images/${id}`, tokenConfig(getState))
+    .then(res =>
+      dispatch({
+        type: GET_IMAGE,
+        payload: id
+      })
+    )
+    .catch(err => {
+      console.error(err);
+      dispatch(returnErrors(err.response.data, err.response.status));
+    });
+};
+
+export const addImage = image => (dispatch, getState) => {
+  axios
+    .post("/api/images", image, tokenConfig(getState))
+    .then(res =>
+      dispatch({
+        type: ADD_IMAGE,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
+
+export const deleteImage = id => (dispatch, getState) => {
+  axios
+    .delete(`/api/images/${id}`, tokenConfig(getState))
+    .then(res =>
+      dispatch({
+        type: DELETE_IMAGE,
+        payload: id
+      })
+    )
+    .catch(err =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
+
+export const setImagesLoading = () => {
+  return {
+    type: IMAGES_LOADING
+  };
+};

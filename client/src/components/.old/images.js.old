@@ -1,0 +1,125 @@
+const express = require("express");
+const multer = require("multer");
+const router = express.Router();
+
+// Image model
+const image = require("./image.js.old");
+
+router.get("/", (req, res) => {
+  return res.status(200).send("Welcome to the home page");
+});
+
+// READ
+// @route GET api/image
+// @desc Get All images
+// @acces Public
+router.get("/", async (req, res) => {
+  try {
+    const images = await image.find({});
+    res.send(images);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+// READ
+// @route GET api/image/:id
+// @desc Get an images
+// @acces Public
+router.get("/:id", async (req, res) => {
+  const _id = req.params.id;
+  try {
+    const image = await image.findById(_id);
+    if (!image) {
+      return res.status(404).send("image not found");
+    }
+    res.send(image);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+// UPDATE
+router.patch("/:id", async (req, res) => {
+  const updates = Object.keys(req.body);
+  const allowedUpdates = ["description", "name"];
+  const isValidOperation = updates.every((update) =>
+    allowedUpdates.includes(update)
+  );
+
+  try {
+    const image = await image.findOne({ _id: req.params.id });
+
+    if (!image) {
+      return res.status(404).send("image not found");
+    }
+
+    updates.forEach((update) => ([update] = req.body[update]));
+    await image.save();
+    res.send(image);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+// DELETE
+router.delete("/:id", async (req, res) => {
+  try {
+    const image = await image.findOneAndDelete({ _id: req.params.id });
+
+    if (!image) {
+      return res.status(404).send("image not found");
+    }
+    res.send(image);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+// upload files
+const upload = multer({
+  limits: {
+    fileSize: 10000000,
+  },
+  fileFilter(req, file, cb) {
+    if (!file.originalname.endsWith(".jpg")) {
+      return cb(new Error("File must have a .jpg extension"));
+    }
+
+    cb(undefined, true);
+  },
+});
+
+router.post(
+  "/:id/upload",
+  // upload.single("file"),
+  async (req, res) => {
+    console.log("_________");
+    const _id = req.params.id;
+    console.log("_id", _id);
+    try {
+      const currentProject = await Project.findOne({ _id });
+      if (!currentProject) {
+        return res.status(404).send("project not found");
+      }
+      const newImage = new image({
+        project: currentProject._id,
+        data: req.file.buffer,
+      });
+      const imageData = await newImage.save();
+
+      //pas later aan naar: currentProject.image.push(imageData._id)
+      currentProject.image = imageData.data;
+
+      //await currentProject.save();
+      res.send({ newImage });
+    } catch (error) {
+      res.status(400).send({ error });
+    }
+  },
+  (error, req, res, next) => {
+    res.status(400).send({ error: error.message });
+  }
+);
+
+module.exports = router;

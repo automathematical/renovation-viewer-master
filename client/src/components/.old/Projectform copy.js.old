@@ -1,0 +1,92 @@
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { addProject } from "../../actions/projectActions";
+
+import "./Projectform.css";
+
+class Projectform extends Component {
+  state = {
+    modal: false,
+    title: "",
+    location: "",
+    projectDesc: ""
+  };
+
+  toggle = () => {
+    this.setState({
+      modal: !this.state.modal
+    });
+  };
+
+  onChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  onSubmit = e => {
+    e.preventDefault();
+
+    const newProject = {
+      title: this.state.title,
+      location: this.state.location,
+      projectDesc: this.state.projectDesc
+    };
+
+    //add project via addProject action
+    this.props.addProject(newProject);
+
+    // Close modal
+    this.toggle();
+  };
+
+  render() {
+    const { title, location, projectDesc } = this.state;
+    return (
+      <div className="Projectform">
+        <h1>Add Project</h1>
+        <form onSubmit={this.onSubmit}>
+          <div>
+            <label>Project Title</label>
+            <br />
+            <input
+              type="text"
+              name="title"
+              onChange={this.onChange}
+              value={title}
+            />
+          </div>
+
+
+          <br />
+          <div>
+            <label>Project Location</label>
+            <br />
+            <input
+              type="text"
+              name="location"
+              onChange={this.onChange}
+              value={location}
+            />
+          </div>
+          <br />
+          <div>
+            <label>Project Description</label>
+            <br />
+            <textarea
+              name="projectDesc"
+              onChange={this.onChange}
+              value={projectDesc}
+            />
+          </div>
+          <br />
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = state => ({
+  project: state.project
+});
+
+export default connect(mapStateToProps, { addProject })(Projectform);

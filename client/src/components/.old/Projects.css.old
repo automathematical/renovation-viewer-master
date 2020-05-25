@@ -1,0 +1,48 @@
+.projects {
+  padding: 4rem 2rem;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+
+.project {
+  box-shadow: 2px 2px 4px #000;
+  overflow: hidden;
+  position: relative;
+  width: 30%;
+  margin-bottom: 1.2rem;
+  margin-top: 1rem;
+  padding: 1rem 2rem;
+}
+.project__img {
+  width: 100%;
+  height: 100%;
+  padding: 1rem 1rem;
+}
+
+.project__title {
+  text-align: center;
+  font-size: 1.4rem;
+}
+
+.project__location {
+  position: relative;
+  text-align: center;
+}
+.project__desc {
+  position: relative;
+  text-align: center;
+  text-align: justify;
+  font-size: 1rem;
+}
+
+.btn__toProject {
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  background-color: rgb(69, 145, 155);
+}

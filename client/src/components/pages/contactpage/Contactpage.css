@@ -1,0 +1,20 @@
+.contacts {
+  justify-content: space-around;
+  justify-items: center;
+  padding: 4rem;
+  width: 80%;
+}
+
+.contact_title {
+  text-align: left;
+  font-size: 1.5rem;
+  margin: 1rem;
+  color: black;
+}
+
+.contact_text {
+  text-align: left;
+  margin: 1rem;
+  color: black;
+  text-align: justify;
+}
