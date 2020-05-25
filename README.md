@@ -36,8 +36,8 @@ deploy server and client:
 
 ```
 {
-  "mongoURI": "mongodb+srv://PUBLIC:PUBLIC123@mernapp-megzh.mongodb.net/test?retryWrites=true&w=majority",
-  "jwtSecret": "heritageApp_myJwtSecret"
+  "mongoURI": "mongodb+srv://[YOURNAME:YOURPASSWORD]@mernapp-megzh.mongodb.net/test?retryWrites=true&w=majority",
+  "jwtSecret": "[YOURPASSWORD]"
 }
 ```
 
