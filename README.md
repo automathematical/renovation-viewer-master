@@ -3,9 +3,9 @@
 ## Building Informatics :classical_building: :computer:
 
 Masters year 2020 - Ghent University project - Advanced Topic <br/>
-Building informatics project with MERN-stack (MongoDB / Express.js / React.js / Node.js)
+Building Informatics project with MERN-stack (MongoDB / Express.js / React.js / Node.js)
 
-**For more information check out our website** [renovation viewer](https://github.ugent.be/pages/mvleempu/renovation-viewer/)
+**For more information check out our website** [renovation viewer](https://automathematically.github.io/renovation-viewer-master/)
 
 ## How to get started with node.js
 
